@@ -5,6 +5,20 @@
 // 1. Create a function to get computer's choice. It must be random and return either "rock", "paper", or "scissors"
 // Pseudocode:
 // function getComputerChoice()
+function getComputerChoice() {
+    let choice;
+    let result;
+    choice = Math.floor(Math.random() * 3) + 1; // get a random number within the range of 0 to 3, add 1 to it (to make sure we're always getting at least 1) and round it down
+
+    if (choice === 1) {
+        result = "ROCK";
+    } else if (choice === 2) {
+        result = "PAPER";
+    } else if (choice === 3) {
+        result = "SCISSORS";
+    }
+    return result;
+}
 //      create variable "choice"
 //      get random number within the range of 1-3
 //      round it down to an integer
