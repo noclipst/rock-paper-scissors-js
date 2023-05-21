@@ -36,6 +36,26 @@ function getComputerChoice() {
 //      else if playerSelection is paper AND computerSelection is rock then player WINS
 //      else player loses
 //      return result
+function playRound(playerSelection, computerSelection) {
+    let result;
+
+    if (playerSelection === "ROCK" || playerSelection === "PAPER" || playerSelection === "SCISSORS") {
+        if (playerSelection === computerSelection) {
+            result = `Draw! You selected ${playerSelection} and so did your opponent!`;
+        } else if (playerSelection === "ROCK" && computerSelection === "SCISSORS") {
+            result = `You win this round! ${playerSelection} beats ${computerSelection}!`;
+        } else if (playerSelection === "SCISSORS" && computerSelection === "PAPER") {
+            result = `You win this round! ${playerSelection} beat ${computerSelection}!`;
+        } else if (playerSelection === "PAPER" && computerSelection === "ROCK") {
+            result = `You win this round! ${playerSelection} beats ${computerSelection}!`;
+        } else {
+            result = `You lose this round! ${computerSelection} beats ${playerSelection}!`;
+        }
+    } else {
+        console.log("Wrong input!");
+    }
+    return result;
+}
 // 3. Create a function that launches the game. The game must be played 5 times. Must keep score of the game. Must return the winner of the game by comparing the scores
 //  function game()
 //      get input from the player via prompt
