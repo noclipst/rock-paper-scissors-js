@@ -50,8 +50,7 @@ function game() {
 
     for (let i = 0; i < 5; i++) { 
         const computerChoice = getComputerChoice();
-        const playerInput = prompt("Please type in your selection. Valid inputs are \"Rock\", \"Paper\" or \"Scissors\"");
-        const playerChoice = playerInput.toUpperCase(); // to make input case-insensitive to allow for proper comparisons
+        const playerChoice = prompt("Please type in your selection. Valid inputs are \"Rock\", \"Paper\" or \"Scissors\"").toUpperCase(); // make input case insensitive to allow for comparisons
         const roundResult = playRound(playerChoice, computerChoice);
         if (roundResult.includes("You win this round")) {
             gamesWonByPlayer += 1;
