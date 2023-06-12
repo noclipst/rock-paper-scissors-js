@@ -2,7 +2,7 @@
 
 
 function getComputerChoice() {
-    let choice = Math.floor(Math.random() * 3) + 1; // get a random number within the range of 0 to 3, add 1 to it (to make sure we're always getting at least 1) and round it down
+    let choice = Math.floor(Math.random() * 3) + 1; // outputs random number within the range of 1 to 3
 
     switch (choice) {
         case 1:
