@@ -2,62 +2,39 @@
 
 
 function getComputerChoice() {
-    let choice;
-    let result;
-    choice = Math.floor(Math.random() * 3) + 1; // get a random number within the range of 0 to 3, add 1 to it (to make sure we're always getting at least 1) and round it down
+    let choice = Math.floor(Math.random() * 3) + 1; // get a random number within the range of 0 to 3, add 1 to it (to make sure we're always getting at least 1) and round it down
 
-    if (choice === 1) {
-        result = "ROCK";
-    } else if (choice === 2) {
-        result = "PAPER";
-    } else if (choice === 3) {
-        result = "SCISSORS";
+    switch (choice) {
+        case 1:
+            return "ROCK";
+        case 2:
+            return "PAPER";
+        case 3:
+            return "SCISSORS";
     }
-    return result;
 }
 
 function playRound(playerSelection, computerSelection) {
-    let result;
 
-    if (playerSelection === "ROCK" || playerSelection === "PAPER" || playerSelection === "SCISSORS") { // to make sure we're passing through valid inputs only
-        if (playerSelection === computerSelection) {
-            result = `Draw! You selected ${playerSelection} and so did your opponent!`;
-        } else if (playerSelection === "ROCK" && computerSelection === "SCISSORS") { // rock beats scissors
-            result = `You win this round! ${playerSelection} beats ${computerSelection}!`;
-        } else if (playerSelection === "SCISSORS" && computerSelection === "PAPER") { // scissors beat paper
-            result = `You win this round! ${playerSelection} beat ${computerSelection}!`;
-        } else if (playerSelection === "PAPER" && computerSelection === "ROCK") { // paper beats rock
-            result = `You win this round! ${playerSelection} beats ${computerSelection}!`;
-        } else {
-            result = `You lose this round! ${computerSelection} beats ${playerSelection}!`; // anything else is a lose condition for the player
-        }
-    } else {
+    if (!["ROCK", "PAPER", "SCISSORS"].includes(playerSelection)) {
         console.log("Wrong input!");
+        return;
+    } // to make sure we're passing through valid inputs only
+
+    if (playerSelection === computerSelection) {
+        return `Draw! You selected ${playerSelection} and so did your opponent!`;
+    } else if (
+        (playerSelection === "ROCK" && computerSelection === "SCISSORS") ||
+        (playerSelection === "SCISSORS" && computerSelection === "PAPER") ||
+        (playerSelection === "PAPER" && computerSelection === "ROCK")
+    ) {
+        return `You win this round! ${playerSelection} beats ${computerSelection}!`;
+    } else {
+        return `You lose this round! ${computerSelection} beats ${playerSelection}!`
     }
-    return result;
 }
 
-function game() {
-    let playerInput = "";
-    let playerChoice = "";
-    let computerChoice = "";
-    let gamesWonByPlayer = 0;
-    let gamesWonByAi = 0;
-    let roundResult = "";
-
-    for (let i = 0; i < 5; i++) { // play the game five times in a row
-        computerChoice = getComputerChoice();
-        playerInput = prompt("Please type in your selection. Valid inputs are \"Rock\", \"Paper\" or \"Scissors\"");
-        playerChoice = playerInput.toUpperCase(); // to make input case-insensitive to allow for proper comparisons
-        roundResult = playRound(playerChoice, computerChoice);
-        if (roundResult.includes("You win this round")) { // to detect if a player won
-            gamesWonByPlayer++;
-        } else if (roundResult.includes("You lose this round")) { // to detect if a player lost
-            gamesWonByAi++;
-        }
-        console.log(roundResult);
-    }
-
+function declareWinner(gamesWonByPlayer, gamesWonByAi) {
     if (gamesWonByPlayer === gamesWonByAi) {
         console.log(`You won ${gamesWonByPlayer} rounds and so did the AI. It's a draw!`);
     } else if (gamesWonByPlayer > gamesWonByAi) {
@@ -65,5 +42,25 @@ function game() {
     } else {
         console.log(`You won ${gamesWonByPlayer} rounds while the AI won ${gamesWonByAi} rounds. You lose, shit happens!`)
     }
+}
+
+function game() {
+    let gamesWonByPlayer = 0;
+    let gamesWonByAi = 0;
+
+    for (let i = 0; i < 5; i++) { 
+        const computerChoice = getComputerChoice();
+        const playerInput = prompt("Please type in your selection. Valid inputs are \"Rock\", \"Paper\" or \"Scissors\"");
+        const playerChoice = playerInput.toUpperCase(); // to make input case-insensitive to allow for proper comparisons
+        const roundResult = playRound(playerChoice, computerChoice);
+        if (roundResult.includes("You win this round")) {
+            gamesWonByPlayer += 1;
+        } else if (roundResult.includes("You lose this round")) {
+            gamesWonByAi += 1;
+        }
+        console.log(roundResult);
+    }
+
+    declareWinner(gamesWonByPlayer, gamesWonByAi);
 
 }
