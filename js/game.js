@@ -44,6 +44,50 @@ function declareWinner(gamesWonByPlayer, gamesWonByAi) {
     }
 }
 
+// buttons
+const btnRock = document.querySelector('#btn-rock');
+const btnPaper = document.querySelector('#btn-paper');
+const btnScissors = document.querySelector('#btn-scissors');
+
+const body = document.querySelector('body');
+
+btnRock.addEventListener('click', function() {
+    const playerSelection = "ROCK";
+    const computerSelection = getComputerChoice();
+    const roundResult = playRound(playerSelection, computerSelection);
+    displayResult(roundResult);
+});
+
+btnPaper.addEventListener('click', function() {
+    const playerSelection = "PAPER";
+    const computerSelection = getComputerChoice();
+    const roundResult = playRound(playerSelection, computerSelection);
+    displayResult(roundResult);
+});
+
+btnScissors.addEventListener('click', function() {
+    const playerSelection = "SCISSORS";
+    const computerSelection = getComputerChoice();
+    const roundResult = playRound(playerSelection, computerSelection);
+    displayResult(roundResult);
+});
+
+const divForResults = document.createElement('div');
+
+divForResults.textContent = "CURRENT SCORE:";
+divForResults.style.display = 'flex';
+divForResults.style.justifyContent = 'center';
+divForResults.style.alignItems = 'center';
+divForResults.style.flexDirection = 'column';
+body.appendChild(divForResults);
+
+function displayResult(roundResult) {
+    const paragraph = document.createElement('p');
+    paragraph.textContent = roundResult;
+    divForResults.appendChild(paragraph);
+}
+
+
 function game() {
     let gamesWonByPlayer = 0;
     let gamesWonByAi = 0;
