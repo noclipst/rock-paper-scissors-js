@@ -41,10 +41,14 @@ function handleClick(choice) {
 }
 
 function displayRoundResult(str) {
-    const para = document.createElement('p');
-    para.setAttribute("class", "round-result");
-    para.textContent = str;
-    divForResults.appendChild(para);
+    if (document.getElementById('round-result')) {
+        document.getElementById('round-result').textContent = str;
+    } else {
+        const para = document.createElement('p');
+        para.setAttribute("id", "round-result");
+        para.textContent = str;
+        divForResults.appendChild(para);
+    }
 
     if (roundsWonByPlayer === 5 || roundsWonByAi === 5) {
         declareWinner(); 
