@@ -32,17 +32,17 @@ function playRound(playerSelection, computerSelection) {
 }
 
 function declareWinner() {
-    if (gamesWonByPlayer === gamesWonByAi) {
+    if (roundsWonByPlayer === roundsWonByAi) {
         const gameResult = document.createElement('p');
-        gameResult.textContent = `You won ${gamesWonByPlayer} rounds and so did the AI. It's a draw!`;
+        gameResult.textContent = `You won ${roundsWonByPlayer} rounds and so did the AI. It's a draw!`;
         divForResults.appendChild(gameResult);
-    } else if (gamesWonByPlayer > gamesWonByAi) {
+    } else if (roundsWonByPlayer > roundsWonByAi) {
         const gameResult = document.createElement('p');
-        gameResult.textContent = `You won ${gamesWonByPlayer} rounds while the AI won ${gamesWonByAi} rounds. Congratulations!`;
+        gameResult.textContent = `You won ${roundsWonByPlayer} rounds while the AI won ${roundsWonByAi} rounds. Congratulations!`;
         divForResults.appendChild(gameResult);
     } else {
         const gameResult = document.createElement('p');
-        gameResult.textContent = `You won ${gamesWonByPlayer} rounds while the AI won ${gamesWonByAi} rounds. You lose, shit happens!`;
+        gameResult.textContent = `You won ${roundsWonByPlayer} rounds while the AI won ${roundsWonByAi} rounds. You lose, shit happens!`;
         divForResults.appendChild(gameResult);
     }
 }
@@ -54,8 +54,8 @@ const btnScissors = document.querySelector('#btn-scissors');
 
 const body = document.querySelector('body');
 
-let gamesWonByPlayer = 0;
-let gamesWonByAi = 0;
+let roundsWonByPlayer = 0;
+let roundsWonByAi = 0;
 
 btnRock.addEventListener('click', function() {
     handleClick('ROCK');
@@ -80,7 +80,7 @@ divForResults.style.flexDirection = 'column';
 body.appendChild(divForResults);
 
 function handleClick(choice) {
-    if (gamesWonByPlayer === 5 || gamesWonByAi === 5) { // stop processing clicks if someone's already won 5 games
+    if (roundsWonByPlayer === 5 || roundsWonByAi === 5) { // stop processing clicks if someone's already won 5 rounds
         return;
     } else {
         const playerSelection = choice;
@@ -97,7 +97,7 @@ function displayRoundResult(roundResult) {
     para.textContent = roundResult;
     divForResults.appendChild(para);
 
-    if (gamesWonByPlayer === 5 || gamesWonByAi === 5) {
+    if (roundsWonByPlayer === 5 || roundsWonByAi === 5) {
         declareWinner();
     }
 }
@@ -105,19 +105,19 @@ function displayRoundResult(roundResult) {
 function displayRunningScore() {
 
     if (document.getElementById("running-score")) { // update it if already exists
-        document.getElementById("running-score").textContent = `Player ${gamesWonByPlayer} : ${gamesWonByAi} Computer`;
+        document.getElementById("running-score").textContent = `Player ${roundsWonByPlayer} : ${roundsWonByAi} Computer`;
     } else {
         const para = document.createElement('p');
         para.setAttribute('id', 'running-score');
-        para.textContent = `Player ${gamesWonByPlayer} : ${gamesWonByAi} Computer`;
+        para.textContent = `Player ${roundsWonByPlayer} : ${roundsWonByAi} Computer`;
         divForResults.appendChild(para);
     }
 }
 
 function updateWinCounter(string) {
     if (string.includes("You win this round")) {
-        gamesWonByPlayer += 1;
+        roundsWonByPlayer += 1;
     } else if (string.includes("You lose this round")) {
-        gamesWonByAi += 1;
+        roundsWonByAi += 1;
     }
 }
