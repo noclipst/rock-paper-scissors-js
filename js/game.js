@@ -1,6 +1,3 @@
-//A simple rock-paper-scissors game. Type game() in the console to start
-
-
 function getComputerChoice() {
     let choice = Math.floor(Math.random() * 3) + 1; // outputs random number within the range of 1 to 3
 
@@ -34,13 +31,19 @@ function playRound(playerSelection, computerSelection) {
     }
 }
 
-function declareWinner(gamesWonByPlayer, gamesWonByAi) {
+function declareWinner() {
     if (gamesWonByPlayer === gamesWonByAi) {
-        console.log(`You won ${gamesWonByPlayer} rounds and so did the AI. It's a draw!`);
+        const gameResult = document.createElement('p');
+        gameResult.textContent = `You won ${gamesWonByPlayer} rounds and so did the AI. It's a draw!`;
+        divForResults.appendChild(gameResult);
     } else if (gamesWonByPlayer > gamesWonByAi) {
-        console.log(`You won ${gamesWonByPlayer} rounds while the AI won ${gamesWonByAi} rounds. That makes you the winner!`)
+        const gameResult = document.createElement('p');
+        gameResult.textContent = `You won ${gamesWonByPlayer} rounds while the AI won ${gamesWonByAi} rounds. Congratulations!`;
+        divForResults.appendChild(gameResult);
     } else {
-        console.log(`You won ${gamesWonByPlayer} rounds while the AI won ${gamesWonByAi} rounds. You lose, shit happens!`)
+        const gameResult = document.createElement('p');
+        gameResult.textContent = `You won ${gamesWonByPlayer} rounds while the AI won ${gamesWonByAi} rounds. You lose, shit happens!`;
+        divForResults.appendChild(gameResult);
     }
 }
 
@@ -51,59 +54,70 @@ const btnScissors = document.querySelector('#btn-scissors');
 
 const body = document.querySelector('body');
 
+let gamesWonByPlayer = 0;
+let gamesWonByAi = 0;
+
 btnRock.addEventListener('click', function() {
-    const playerSelection = "ROCK";
-    const computerSelection = getComputerChoice();
-    const roundResult = playRound(playerSelection, computerSelection);
-    displayResult(roundResult);
+    handleClick('ROCK');
 });
 
 btnPaper.addEventListener('click', function() {
-    const playerSelection = "PAPER";
-    const computerSelection = getComputerChoice();
-    const roundResult = playRound(playerSelection, computerSelection);
-    displayResult(roundResult);
+    handleClick('PAPER');
 });
 
 btnScissors.addEventListener('click', function() {
-    const playerSelection = "SCISSORS";
-    const computerSelection = getComputerChoice();
-    const roundResult = playRound(playerSelection, computerSelection);
-    displayResult(roundResult);
+    handleClick('SCISSORS')
 });
 
 const divForResults = document.createElement('div');
 
-divForResults.textContent = "CURRENT SCORE:";
+divForResults.setAttribute('id', 'round-results');
 divForResults.style.display = 'flex';
 divForResults.style.justifyContent = 'center';
 divForResults.style.alignItems = 'center';
 divForResults.style.flexDirection = 'column';
+
 body.appendChild(divForResults);
 
-function displayResult(roundResult) {
-    const paragraph = document.createElement('p');
-    paragraph.textContent = roundResult;
-    divForResults.appendChild(paragraph);
+function handleClick(choice) {
+    if (gamesWonByPlayer === 5 || gamesWonByAi === 5) { // stop processing clicks if someone's already won 5 games
+        return;
+    } else {
+        const playerSelection = choice;
+        const computerSelection = getComputerChoice();
+        const roundResult = playRound(playerSelection, computerSelection);
+        updateWinCounter(roundResult);
+        displayRunningScore();
+        displayRoundResult(roundResult);
+    }
 }
 
+function displayRoundResult(roundResult) {
+    const para = document.createElement('p');
+    para.textContent = roundResult;
+    divForResults.appendChild(para);
 
-function game() {
-    let gamesWonByPlayer = 0;
-    let gamesWonByAi = 0;
-
-    for (let i = 0; i < 5; i++) { 
-        const computerChoice = getComputerChoice();
-        const playerChoice = prompt("Please type in your selection. Valid inputs are \"Rock\", \"Paper\" or \"Scissors\"").toUpperCase(); // make input case insensitive to allow for comparisons
-        const roundResult = playRound(playerChoice, computerChoice);
-        if (roundResult.includes("You win this round")) {
-            gamesWonByPlayer += 1;
-        } else if (roundResult.includes("You lose this round")) {
-            gamesWonByAi += 1;
-        }
-        console.log(roundResult);
+    if (gamesWonByPlayer === 5 || gamesWonByAi === 5) {
+        declareWinner();
     }
+}
 
-    declareWinner(gamesWonByPlayer, gamesWonByAi);
+function displayRunningScore() {
 
+    if (document.getElementById("running-score")) { // update it if already exists
+        document.getElementById("running-score").textContent = `Player ${gamesWonByPlayer} : ${gamesWonByAi} Computer`;
+    } else {
+        const para = document.createElement('p');
+        para.setAttribute('id', 'running-score');
+        para.textContent = `Player ${gamesWonByPlayer} : ${gamesWonByAi} Computer`;
+        divForResults.appendChild(para);
+    }
+}
+
+function updateWinCounter(string) {
+    if (string.includes("You win this round")) {
+        gamesWonByPlayer += 1;
+    } else if (string.includes("You lose this round")) {
+        gamesWonByAi += 1;
+    }
 }
