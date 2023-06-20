@@ -1,10 +1,10 @@
 const btnRock = document.querySelector('#btn-rock');
 const btnPaper = document.querySelector('#btn-paper');
 const btnScissors = document.querySelector('#btn-scissors');
-
 const body = document.querySelector('body');
 
-const divForResults = document.createElement('div');
+const divForResults = document.createElement('div'); // TODO separate function for this div?
+
 divForResults.setAttribute('id', 'round-results');
 divForResults.style.display = 'flex';
 divForResults.style.justifyContent = 'center';
@@ -41,10 +41,12 @@ function handleClick(choice) {
 }
 
 function displayRoundResult(str) {
-    if (document.getElementById('round-result')) {
-        document.getElementById('round-result').textContent = str;
+    const roundResultText = document.getElementById('round-result');
+    const para = document.createElement('p');
+    
+    if (roundResultText) {
+        roundResultText.textContent = str;
     } else {
-        const para = document.createElement('p');
         para.setAttribute("id", "round-result");
         para.textContent = str;
         divForResults.appendChild(para);
@@ -56,11 +58,12 @@ function displayRoundResult(str) {
 }
 
 function displayRunningScore() {
+    const runningScore = document.getElementById("running-score");
+    const para = document.createElement('p');
 
-    if (document.getElementById("running-score")) { // update it if already exists
-        document.getElementById("running-score").textContent = `Player ${roundsWonByPlayer} : ${roundsWonByAi} Computer`;
+    if (runningScore) { // update it if already exists
+        runningScore.textContent = `Player ${roundsWonByPlayer} : ${roundsWonByAi} Computer`;
     } else {
-        const para = document.createElement('p');
         para.setAttribute('id', 'running-score');
         para.textContent = `Player ${roundsWonByPlayer} : ${roundsWonByAi} Computer`;
         divForResults.appendChild(para);
@@ -109,17 +112,16 @@ function playRound(playerSelection, computerSelection) {
 }
 
 function declareWinner() {
-    if (roundsWonByPlayer === roundsWonByAi) {
-        const gameResult = document.createElement('p');
-        gameResult.textContent = `You won ${roundsWonByPlayer} rounds and so did the AI. It's a draw!`;
-        divForResults.appendChild(gameResult);
-    } else if (roundsWonByPlayer > roundsWonByAi) {
-        const gameResult = document.createElement('p');
+    const gameResult = document.createElement('p');
+
+    // draw won't happen because we're only playing till 5 wins and both of the players can't reach 5 simultaneously
+    // if (roundsWonByPlayer === roundsWonByAi) {
+    //     gameResult.textContent = `You won ${roundsWonByPlayer} rounds and so did the AI. It's a draw!`;
+    if (roundsWonByPlayer > roundsWonByAi) {
         gameResult.textContent = `You won ${roundsWonByPlayer} rounds while the AI won ${roundsWonByAi} rounds. Congratulations!`;
-        divForResults.appendChild(gameResult);
     } else {
-        const gameResult = document.createElement('p');
         gameResult.textContent = `You won ${roundsWonByPlayer} rounds while the AI won ${roundsWonByAi} rounds. You lose, shit happens!`;
-        divForResults.appendChild(gameResult);
     }
+
+    divForResults.appendChild(gameResult);
 }
