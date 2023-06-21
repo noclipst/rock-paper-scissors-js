@@ -1,3 +1,5 @@
+// TODO add game reset button at the end of the game
+
 const btnRock = document.querySelector('#btn-rock');
 const btnPaper = document.querySelector('#btn-paper');
 const btnScissors = document.querySelector('#btn-scissors');
@@ -44,6 +46,7 @@ function displayRoundResult(str) {
     const roundResultText = document.getElementById('round-result');
     const para = document.createElement('p');
     
+    
     if (roundResultText) {
         roundResultText.textContent = str;
     } else {
@@ -53,7 +56,14 @@ function displayRoundResult(str) {
     }
 
     if (roundsWonByPlayer === 5 || roundsWonByAi === 5) {
-        declareWinner(); 
+        declareWinner();
+        initGameRefreshBtn();
+
+        const refreshBtn = document.querySelector("#btn-game-refresh");
+
+        refreshBtn.addEventListener("click", function() {
+            restartGame();
+        })
     }
 }
 
@@ -79,7 +89,7 @@ function updateWinCounter(string) {
 }
 
 function getComputerChoice() {
-    let choice = Math.floor(Math.random() * 3) + 1; // outputs random number within the range of 1 to 3
+    const choice = Math.floor(Math.random() * 3) + 1; // outputs random number within the range of 1 to 3
 
     switch (choice) {
         case 1:
@@ -124,4 +134,21 @@ function declareWinner() {
     }
 
     divForResults.appendChild(gameResult);
+}
+
+function initGameRefreshBtn() {
+    const btnGameRefresh = document.createElement("button");
+
+    btnGameRefresh.setAttribute('id', 'btn-game-refresh');
+    btnGameRefresh.textContent = "Start over";
+    divForResults.appendChild(btnGameRefresh);
+}
+
+function restartGame() { // to restart the game you need to reset counters and remove all the children of divForResults
+    roundsWonByPlayer = 0;
+    roundsWonByAi = 0;
+
+    while (divForResults.firstChild) {
+        divForResults.removeChild(divForResults.firstChild);
+    }
 }
