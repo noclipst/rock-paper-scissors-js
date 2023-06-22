@@ -1,12 +1,36 @@
 * {
     font-family: 'Roboto', sans-serif;
+    background-color: #c0c2c4;
 }
 
 body {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+h1, h2 {
+    margin-bottom: 40px;
+    background-color: #dce9f5;
+}
+
+p {
+    background-color: #dce9f5;
+}
+
+div {
+    background-color: #dce9f5;
+}
+
+.game {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     flex-direction: column;
+    border: 5px solid black;
+    border-radius: 5%;
+    padding: 50px;
+    background-color: #dce9f5;
 }
 
 .buttons {
@@ -15,4 +39,12 @@ body {
     align-items: center;
     gap: 60px;
     margin-bottom: 40px;
+    background-color: #dce9f5;
+}
+
+.buttons button {
+    background-color: rgb(0,144,0);
+    font-size: 18px;
+    border-radius: 50%;
+    padding: 50px;
 }

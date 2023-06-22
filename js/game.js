@@ -1,9 +1,7 @@
-// TODO add game reset button at the end of the game
-
 const btnRock = document.querySelector('#btn-rock');
 const btnPaper = document.querySelector('#btn-paper');
 const btnScissors = document.querySelector('#btn-scissors');
-const body = document.querySelector('body');
+const gameDiv = document.querySelector('.game');
 
 const divForResults = document.createElement('div'); // TODO separate function for this div?
 
@@ -12,7 +10,7 @@ divForResults.style.display = 'flex';
 divForResults.style.justifyContent = 'center';
 divForResults.style.alignItems = 'center';
 divForResults.style.flexDirection = 'column';
-body.appendChild(divForResults);
+gameDiv.appendChild(divForResults);
 
 let roundsWonByPlayer = 0;
 let roundsWonByAi = 0;
