@@ -138,7 +138,6 @@ function initGameRefreshBtn() {
     const btnGameRefresh = document.createElement("button");
 
     btnGameRefresh.setAttribute('id', 'btn-game-refresh');
-    btnGameRefresh.textContent = "Start over";
     divForResults.appendChild(btnGameRefresh);
 }
 
